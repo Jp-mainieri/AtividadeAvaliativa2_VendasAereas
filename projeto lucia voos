@@ -1,0 +1,116 @@
+print("\n\tBem vindo ao menu da companhia aerea!")
+
+voos = {}
+passageiros={}
+menu = 0
+
+while menu != 7:
+    print("="*50)
+    print("\n\tSelecione uma opção:")
+    print("\n\t1. Cadastrar voo")
+    print("\n\t2. Consultar voo")
+    print("\n\t3. Informar voos com as menores escalas")
+    print("\n\t4. Listar passageiros de um voo")
+    print("\n\t5. Vendas de passagens")
+    print("\n\t6. cancelamento de passagens")
+    print("\n\t7. Sair")
+    print("="*50)
+    menu = int(input("\n\t: "))
+
+    if menu == 1:
+        print("\n\tCadastrar voo")
+        print("="*50)
+        codigo_voo = int(input("\n\tDigite o código do voo: "))
+        while codigo_voo in voos:
+            print("="*50)
+            print("\n\tEsse código já foi cadastrado! Digite outro código.")
+            print("="*50)
+            codigo_voo = int(input("\n\tCódigo do voo: "))
+        else:
+            voos[codigo_voo] = {
+                "origem": input("\n\tDigite a origem do voo: "),
+                "destino": input("\n\tDigite o destino do voo: "),
+                "data": input("\n\tDigite a data do voo (dd/mm/aaaa): "),
+                "escala": int(input("\n\tDigite o número de escalas: ")),
+                "preco": float(input("\n\tDigite o preço da passagem: ")),
+                "quantidade_passageiros": int(input("\n\tDigite a quantidade de passageiros: ")),
+                "passageiros": []
+            }
+        print("="*50)
+        print("\n\tVoo cadastrado com sucesso!")
+    if menu == 2:
+        print("\n\tConsultar voo")
+        print("="*50)
+        print("\n\tDigite sua opção:")
+        print("\n\t1.Consultar pelo codigo do voo")
+        print("\n\t2.Consultar pela origem do voo")
+        print("\n\t3.Consultar pelo destino do voo")
+        opcao = int(input("\n\t: "))
+        if opcao == 1:
+            codigo = int(input("\n\tDigite o código do voo: "))
+            if codigo in voos:
+                v = voos[codigo]
+                print("="*50)
+                print(f"\n\tCódigo do voo: {codigo}")
+                print(f"\n\tOrigem do voo: {v['origem']}")
+                print(f"\n\tDestino do voo: {v['destino']}")
+                print(f"\n\tPreço da passagem: R${v['preco']}")
+                print(f"\n\tQuantidade de passageiros: {v['quantidade_passageiros']}")
+                print(f"\n\tData do voo: {v['data']}")
+                print(f"\n\tNúmero de escalas: {v['escala']}")
+                print("="*50)
+            else:
+                print("="*50)
+                print("\n\tEsse voo não existe!")
+                print("="*50)
+        elif opcao == 2:
+            origem = input("\n\tDigite a origem do voo: ")
+            encontrou = 0
+            for codigo, dados in voos.items():
+                if dados["origem"].lower() == origem.lower():
+                    print("="*50)
+                    print(f"\n\tCódigo do voo: {codigo}")
+                    print(f"\n\tDestino do voo: {dados['destino']}")
+                    print(f"\n\tPreço da passagem: {dados['preco']}")
+                    encontrou = 1
+            if encontrou == 0:
+                    print("="*50)
+                    print("\n\tNenhum voo encontrado com essa origem!")
+                    print("="*50)
+        elif opcao == 3:
+            destino = input("\n\tDigite o destino do voo: ")
+            encontrou = 0
+            for codigo, dados in voos.items():
+                if dados["destino"].lower() == destino.lower():
+                    print("="*50)
+                    print(f"\n\tCódigo do voo: {codigo}")
+                    print(f"\n\tOrigem do voo: {dados['origem']}")
+                    print(f"\n\tPreço da passagem: {dados['preco']}")
+                    encontrou = 1
+            if encontrou == 0:
+                    print("="*50)
+                    print("\n\tNenhum voo encontrado com esse destino!")
+                    print("="*50)
+        else:
+            print("="*50)
+            print("\n\tOpção inválida!")
+            print("="*50)
+    if menu == 3:
+        print("=" * 50)
+        print("Informar voos com as menores escalas")
+        origem = input("\n\tInforme a cidade origem da viagem: ")
+        destino = input("\n\tInforme a cidade destino: ")
+        encontrou = 0
+        for codigo, dados in voos.items():
+            if dados["origem"].lower() == origem.lower() and dados["destino"].lower() == destino.lower():
+                print("=" * 50)
+                print(f"\n\tOrigem do voo: {dados['origem']}")
+                print(f"\n\tDestino do voo: {dados['destino']}")
+                print(f"\n\tCodigos de voos: {codigo}")
+                print(f"\n\tEscalas: {dados['escala']}")
+                print("=" * 50)
+                encontrou = 1
+        if encontrou == 0:
+            print("=" * 50)
+            print("\n\tNenhum voo encontrado")
+            print("=" * 50)

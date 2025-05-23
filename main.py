@@ -12,10 +12,10 @@ while menu != 7:
     print("\n\t3. Informar voos com as menores escalas")
     print("\n\t4. Listar passageiros de um voo")
     print("\n\t5. Vendas de passagens")
-    print("\n\t6. cancelamento de passagens")
+    print("\n\t6. Cancelamento de passagens")
     print("\n\t7. Sair")
     print("="*50)
-    menu = int(input("\n\t: "))
+    menu = int(input("\n\t> "))
 
     if menu == 1:
         print("\n\tCadastrar voo")

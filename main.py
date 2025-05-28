@@ -16,6 +16,9 @@ while menu != 7:
     print("\n\t7. Sair")
     print("="*50)
     menu = int(input("\n\t> "))
+    while menu < 1 or menu > 7:
+        print("Opção inválida, Selecione uma opção acima")
+        menu = int(input("\n\t> "))
 
     if menu == 1:
         print("\n\tCadastrar voo")

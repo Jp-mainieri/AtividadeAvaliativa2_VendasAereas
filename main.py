@@ -108,11 +108,11 @@ while menu != 7:
                 encontrou = False
 
                 for codigo_voo, consultarVoo in voos.items():
-                    if dados["destino"].lower() == destino.lower():
+                    if consultarVoo["destino"].lower() == destino.lower():
                         print("="*50)
-                        print(f"\n\tCódigo do voo: {codigo}")
-                        print(f"\n\tOrigem do voo: {dados['origem']}")
-                        print(f"\n\tPreço da passagem: {dados['preco']}")
+                        print(f"\n\tCódigo do voo: {codigo_voo}")
+                        print(f"\n\tOrigem do voo: {consultarVoo['origem']}")
+                        print(f"\n\tPreço da passagem: {consultarVoo['preco']}")
                         encontrou = True
 
                 if not encontrou:
@@ -140,8 +140,8 @@ while menu != 7:
 
             for consultarVoo in voos.values():
                 if consultarVoo["origem"].lower() == origem.lower() and consultarVoo["destino"].lower() == destino.lower():
-                    if menor_escala == None or dados["escala"] < menor_escala:
-                        menor_escala = dados["escala"]
+                    if menor_escala == None or consultarVoo["escala"] < menor_escala:
+                        menor_escala = consultarVoo["escala"]
 
             if menor_escala is None:
                 print("=" * 50)
@@ -184,11 +184,13 @@ while menu != 7:
                     print(f"\n\tPassageiros do voo {codigo_voo}:")
                     print("="*50)
 
-                    for passageiros in voos[codigo_voo]["passageiros"]:
-                        print(f"\n\tNome: {passageiros['nome']}")
-                        print(f"\n\tCPF: {passageiros['cpf']}")
-                        print(f"\n\tTelefone: {passageiros['telefone']}")
+                    for cpf_passageiro in voos[codigo_voo]["passageiros"]:
+                        passageiro = clientes[cpf_passageiro]
+                        print(f"\n\tNome: {passageiro['nome']}")
+                        print(f"\n\tCPF: {cpf_passageiro}")
+                        print(f"\n\tTelefone: {passageiro['telefone']}")
                         print("="*50)
+
                     print("\n\tVagas restantes:", voos[codigo_voo]["quantidade_lugares_disponiveis"])
                     print("="*50)
     
@@ -198,84 +200,76 @@ while menu != 7:
 
         if len(voos) == 0:
             print("\n\tNão há voos cadastrados!")
-
         else:
-            codigo_voo = int(input("\n\tDigite o código do voo: "))
+            codigo_voo = input("\n\tDigite o código do voo: ")
 
             if codigo_voo not in voos:
                 print("="*50)
                 print("\n\tEsse voo não existe!")
                 print("="*50)
-
             elif codigo_voo not in voosDisponiveis:
                 print("="*50)
                 print("\n\tNão há mais passagens disponíveis para esse voo!")
                 print("="*50)
-
             else:
                 cpf_passageiro = input("\n\tDigite o CPF do passageiro: ")
                 ja_cadastrado = False
 
-                if cpf_passageiro not in passageiros:
-                    print("\tPassageiro não cadastrado")
-                    nome_passageiro = input("\n\tDigite o nome do passageiro: ")
-                    telefone_passageiro = input("\n\tDigite o telefone do passageiro: ")
-
-                for passageiro in voos[codigo_voo]["passageiros"]:
-                    if passageiro["cpf"] == cpf_passageiro:
-                        ja_cadastrado = True
-                        break
-                if ja_cadastrado:
+                if cpf_passageiro in voos[codigo_voo]["passageiros"]:
                     print("="*50)
                     print("\n\tEsse CPF já está cadastrado nesse voo!")
                     print("="*50)
+
                 else:
-                    passageiros[cpf_passageiro] = {
-                        "nome": nome_passageiro,
-                        "telefone": telefone_passageiro,
-                    }
-                    voos[codigo_voo]["passageiros"].append({
-                        "nome": nome_passageiro,
-                        "cpf": cpf_passageiro,
-                        "telefone": telefone_passageiro
-                    })
+                    if cpf_passageiro not in clientes:
+                        print("\tPassageiro não cadastrado:")
+                        nome_passageiro = input("\n\tDigite o nome do passageiro: ")
+                        telefone_passageiro = input("\n\tDigite o telefone do passageiro: ")
+
+                        clientes[cpf_passageiro] = {"nome": nome_passageiro,"telefone": telefone_passageiro,}
+
+                        voos[codigo_voo]["passageiros"].append(cpf_passageiro)
+
                     voos[codigo_voo]["quantidade_lugares_disponiveis"] -= 1
+
                     if voos[codigo_voo]["quantidade_lugares_disponiveis"] == 0:
                         voosDisponiveis.remove(codigo_voo)
+
                     print("="*50)
                     print("\n\tPassagem vendida com sucesso!")
                     print("="*50)
-   
+
     elif menu == 6:
         print("\n\tCancelamento de passagens")
         print("="*50)
+
         if len(voos) == 0:
             print("\n\tNão há voos cadastrados!")
         else:
-            codigo_voo = int(input("\n\tDigite o código do voo: "))
+            codigo_voo = input("\n\tDigite o código do voo: ")
+
             if codigo_voo not in voos:
                 print("="*50)
                 print("\n\tEsse voo não existe!")
                 print("="*50)
-            elif codigo_voo not in voosDisponiveis:
-                voosDisponiveis.append(codigo_voo)
             else:
-                passageiro_cpf = input("\n\tDigite o CPF do passageiro: ")
-                encontrado = False
-                for passageiro in voos[codigo_voo]["passageiros"]:
-                    if passageiro["cpf"] == passageiro_cpf:
-                        voos[codigo_voo]["passageiros"].remove(passageiro)
-                        voos[codigo_voo]["quantidade_lugares_disponíveis"] += 1
-                        print("="*50)
-                        print("\n\tPassagem cancelada com sucesso!")
-                        print("="*50)
-                        encontrado = True
-                        break
-                if encontrado == False:
+                cpf_passageiro = input("\n\tDigite o CPF do passageiro: ")
+
+                if cpf_passageiro not in voos[codigo_voo]["passageiros"]:
                     print("="*50)
                     print("\n\tNão há passageiro cadastrado com esse CPF nesse voo!")
                     print("="*50)
-   
+                else:
+                    voos[codigo_voo]["passageiros"].remove(cpf_passageiro)
+                    voos[codigo_voo]["quantidade_lugares_disponíveis"] += 1
+
+                    if codigo_voo not in voosDisponiveis:
+                        voosDisponiveis.append(codigo_voo)
+
+                print("="*50)
+                print("\n\tPassagem cancelada com sucesso!")
+                print("="*50)
+
     elif menu == 7:
         print("\n\tObrigado por usar o sistema da companhia aérea!\n")
    

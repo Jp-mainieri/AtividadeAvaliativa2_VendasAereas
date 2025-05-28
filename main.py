@@ -220,7 +220,7 @@ while menu != 7:
                     print("\tPassageiro não cadastrado")
                     nome_passageiro = input("\n\tDigite o nome do passageiro: ")
                     telefone_passageiro = input("\n\tDigite o telefone do passageiro: ")
-                    
+
                 for passageiro in voos[codigo_voo]["passageiros"]:
                     if passageiro["cpf"] == cpf_passageiro:
                         ja_cadastrado = True
@@ -257,6 +257,8 @@ while menu != 7:
                 print("="*50)
                 print("\n\tEsse voo não existe!")
                 print("="*50)
+            elif codigo_voo not in voosDisponiveis:
+                voosDisponiveis.append(codigo_voo)
             else:
                 passageiro_cpf = input("\n\tDigite o CPF do passageiro: ")
                 encontrado = False

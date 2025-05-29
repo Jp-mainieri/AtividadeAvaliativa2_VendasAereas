@@ -89,7 +89,6 @@ while menu != 7:
             elif opcao == 2:
                 origem = input("\n\tDigite a origem do voo: ")
                 encontrou = False
-
                 for codigo_voo, consultarVoo in voos.items():
                     if origem.lower() in consultarVoo["origem"].lower():
                         print("="*50)
@@ -167,14 +166,9 @@ while menu != 7:
             print("\n\tNão há voos cadastrados!")
 
         else:
-            codigo_voo = int(input("\n\tDigite o código do voo: "))
+            codigo_voo = str(input("\n\tDigite o código do voo: "))
 
-            if codigo_voo not in voos:
-                print("="*50)
-                print("\n\tEsse voo não existe!")
-                print("="*50)
-
-            else:
+            if codigo_voo in voos:
                 if len(voos[codigo_voo]["passageiros"]) == 0:
                     print("="*50)
                     print("\n\tNão há passageiros cadastrados nesse voo!")
@@ -193,6 +187,12 @@ while menu != 7:
 
                     print("\n\tVagas restantes:", voos[codigo_voo]["quantidade_lugares_disponiveis"])
                     print("="*50)
+
+            else:
+                print("="*50)
+                print("\n\tEsse voo não existe!")
+                print("="*50)
+                
     
     elif menu == 5:
         print("\n\tVendas de passagens")
@@ -213,7 +213,6 @@ while menu != 7:
                 print("="*50)
             else:
                 cpf_passageiro = input("\n\tDigite o CPF do passageiro: ")
-                ja_cadastrado = False
 
                 if cpf_passageiro in voos[codigo_voo]["passageiros"]:
                     print("="*50)
@@ -222,13 +221,13 @@ while menu != 7:
 
                 else:
                     if cpf_passageiro not in clientes:
-                        print("\n\tPassageiro não cadastrado:")
+                        print("\n\tEsse passageiro ainda não foi cadastrado")
                         nome_passageiro = input("\n\tDigite o nome do passageiro: ")
                         telefone_passageiro = input("\n\tDigite o telefone do passageiro: ")
 
-                        clientes[cpf_passageiro] = {"nome": nome_passageiro,"telefone": telefone_passageiro,}
+                        clientes[cpf_passageiro] = {"nome": nome_passageiro,"telefone": telefone_passageiro}
 
-                        voos[codigo_voo]["passageiros"].append(cpf_passageiro)
+                    voos[codigo_voo]["passageiros"].append(cpf_passageiro)
 
                     voos[codigo_voo]["quantidade_lugares_disponiveis"] -= 1
 
@@ -261,7 +260,7 @@ while menu != 7:
                     print("="*50)
                 else:
                     voos[codigo_voo]["passageiros"].remove(cpf_passageiro)
-                    voos[codigo_voo]["quantidade_lugares_disponíveis"] += 1
+                    voos[codigo_voo]["quantidade_lugares_disponIveis"] += 1
 
                     if codigo_voo not in voosDisponiveis:
                         voosDisponiveis.append(codigo_voo)

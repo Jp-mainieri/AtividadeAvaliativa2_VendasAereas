@@ -6,7 +6,6 @@ voosDisponiveis = []
 menu = 0
 
 while menu != 7:
-
     print("="*50)
     print("\n\tSelecione uma opção:")
     print("\n\t1. Cadastrar voo")
@@ -132,7 +131,6 @@ while menu != 7:
             print("\n\tNenhum voo cadastrado!")
 
         else: 
-            #Ideia do grupo: Tem como fazer com que, ao invés de passar o número de escalas, o programa veja todos os voos e veja qual é o caminho mais perto para a pessoa fazer dando a origem e o destino. Exemplo: voo1: São Paulo -> Rio de janeiro, voo2: Rio de janeiro -> Salvador. Nesse caso minha origem pesquisada é são paulo e meu destino é salvador, porém o voo que eu procuro tem 1 escala, no rio de janeiro.
             origem = input("\n\tInforme a cidade origem da viagem: ")
             destino = input("\n\tInforme a cidade destino: ")
             menor_escala = None
@@ -224,11 +222,9 @@ while menu != 7:
                         print("\n\tEsse passageiro ainda não foi cadastrado")
                         nome_passageiro = input("\n\tDigite o nome do passageiro: ")
                         telefone_passageiro = input("\n\tDigite o telefone do passageiro: ")
-
                         clientes[cpf_passageiro] = {"nome": nome_passageiro,"telefone": telefone_passageiro}
 
                     voos[codigo_voo]["passageiros"].append(cpf_passageiro)
-
                     voos[codigo_voo]["quantidade_lugares_disponiveis"] -= 1
 
                     if voos[codigo_voo]["quantidade_lugares_disponiveis"] == 0:

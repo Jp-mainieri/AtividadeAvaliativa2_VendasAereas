@@ -159,7 +159,7 @@ while menu != 7:
                         print(f"\n\tNúmero de escalas: {consultarVoo['escala']}")
                         print("=" * 50)
   
-    elif menu == 4:
+    elif menu == 4: ### ERROS!
         print("\n\tListar passageiros de um voo")
         print("="*50)
 
@@ -222,7 +222,7 @@ while menu != 7:
 
                 else:
                     if cpf_passageiro not in clientes:
-                        print("\tPassageiro não cadastrado:")
+                        print("\n\tPassageiro não cadastrado:")
                         nome_passageiro = input("\n\tDigite o nome do passageiro: ")
                         telefone_passageiro = input("\n\tDigite o telefone do passageiro: ")
 

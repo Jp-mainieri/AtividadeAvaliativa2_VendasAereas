@@ -156,7 +156,7 @@ while menu != 7:
                         print(f"\n\tNúmero de escalas: {consultarVoo['escala']}")
                         print("=" * 50)
   
-    elif menu == 4: ### ERROS!
+    elif menu == 4:
         print("\n\tListar passageiros de um voo")
         print("="*50)
 
